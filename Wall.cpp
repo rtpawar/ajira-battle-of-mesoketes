@@ -80,7 +80,7 @@ class Wall
          * Prints all wall side height
          */
         void printWall() {
-            cunt << endl << endl << --------- WALL --------- << endl << endl;
+            cout << endl << endl << "--------- WALL ---------" << endl << endl;
             cout <<"NORTH : " << wallHeight["north"] << endl;
             cout <<"SOUTH : " << wallHeight["south"] << endl;
             cout <<"EAST : " << wallHeight["east"] << endl;

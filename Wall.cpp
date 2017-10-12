@@ -5,13 +5,26 @@ using namespace std;
 #include <string>
 #include <unordered_map>
 
+/**
+ * Represents the Battle class having walls and attack count
+ *
+ * @author Aarti Pawar <aartiashokpawar@gmail.com>
+ */
 class Wall
 {
     private:
+
+        /**
+         * Class variables
+         */
         std::unordered_map <std::string, int> wallHeight;
         int attack;
 
     public:
+
+        /**
+         * Constructor - to initialize class variables
+         */
         Wall() {
             wallHeight = {
                 { "north", 0 },
@@ -19,16 +32,34 @@ class Wall
                 { "west", 0 },
                 { "east", 0 }
             };
+
+            attack = 0;
         }
 
+        /**
+         * Checks if wall is attacked ie if wall height is less than the attacked strength
+         *
+         * @param  wallSide        wall side
+         * @param  attackedHeight  attacked strength
+         *
+         * @return                 True, if wall is attacked
+         */
         int isWallAttacked(std::string wallSide, int attackedHeight) {
             return wallHeight[wallSide] < attackedHeight;
         }
 
+        /**
+         * Increments 'attack' class variable by 1 when successful attack is made
+         */
         void reportAttack() {
             attack = attack + 1;
         }
 
+        /**
+         * Updates the height of all the sides of the wall after battle finishes on that day
+         *
+         * @param wallHeightTemp   Map to store four wall sides height
+         */
         void updateWallHeightTemp(std::unordered_map <std::string, int> wallHeightTemp) {
             for (auto it : wallHeight) {
 
@@ -45,6 +76,9 @@ class Wall
             }
         }
 
+        /**
+         * Prints all wall side height
+         */
         void printWall() {
             cunt << endl << endl << --------- WALL --------- << endl << endl;
             cout <<"NORTH : " << wallHeight["north"] << endl;
@@ -53,12 +87,20 @@ class Wall
             cout <<"WEST : " << wallHeight["west"] << endl;
         }
 
+        /**
+         * Prints successful attack count
+         */
         void printAttackCount() {
-            cout << endl << "Count Attack : " << attack << endl;
+            cout << endl << "Successful Attack Count: " << attack << endl;
         }
 
 };
 
+/**
+ * main function - an entry point
+ *
+ * @return  integer  Returns 0, if suucessful
+ */
 int main()
 {
     Wall *wall = new Wall();
@@ -68,6 +110,7 @@ int main()
 
     std::unordered_map <std::string, int> wallHeightTemp;
 
+    // Assumption - Three days of battle
     for (int days = 0; days < 3; days++)
     {
         wallHeightTemp = {
@@ -80,6 +123,7 @@ int main()
         cout << endl << "DAY " << days+1 << endl;
         ch = 1;
 
+        // Each day attacks
         while(ch) {
 
             attackedHeight = 0;
@@ -96,15 +140,18 @@ int main()
             cout << "Enter tribe, wallside, attack strength" << endl;
             cin >> tribe >> wallSide >> attackedHeight;
 
+            // Check if the wall side attack is successful
             if (wall->isWallAttacked(wallSide, attackedHeight)) {
                 wallHeightTemp[wallSide] = attackedHeight;
                 wall->reportAttack();
             }
         }
 
+        // Update all the attacked wall sides
         wall->updateWallHeightTemp(wallHeightTemp);
     }
 
+    // Print Wall sides strength and successful attack count
     wall->printWall();
     wall->printAttackCount();
 
